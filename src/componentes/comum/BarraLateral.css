@@ -1,0 +1,99 @@
+.barra-lateral {
+  background: var(--barra-lateral);
+  color: var(--barra-lateral-texto);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  height: 100%;
+  overflow: auto;
+  padding: 22px 16px;
+  width: var(--barra-lateral-largura);
+}
+
+.barra-lateral__marca {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  margin-bottom: 28px;
+  padding: 0 8px;
+}
+
+.barra-lateral__marca strong {
+  display: block;
+  font-size: 1.05rem;
+}
+
+.barra-lateral__marca p {
+  color: var(--barra-lateral-suave);
+  font-size: 0.82rem;
+}
+
+.barra-lateral__selo {
+  display: block;
+  flex-shrink: 0;
+  height: 42px;
+  width: 42px;
+}
+
+.barra-lateral__navegacao {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.barra-lateral__item {
+  background: transparent;
+  border: 0;
+  border-radius: 10px;
+  color: var(--barra-lateral-texto);
+  padding: 11px 12px;
+  text-align: left;
+}
+
+.barra-lateral__item:hover,
+.barra-lateral__item:focus-visible {
+  background: rgba(255, 255, 255, 0.08);
+  outline: none;
+}
+
+.barra-lateral__item--ativo {
+  background: #1c8c86;
+  color: #fff;
+  font-weight: 650;
+}
+
+.barra-lateral__cobertura {
+  display: none;
+}
+
+@media (max-width: 860px) {
+  .barra-lateral {
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    top: 0;
+    transform: translateX(-105%);
+    transition: transform 0.2s ease;
+    z-index: 40;
+  }
+
+  .barra-lateral--aberto {
+    transform: translateX(0);
+  }
+
+  .barra-lateral__cobertura {
+    background: rgba(16, 40, 51, 0.45);
+    border: 0;
+    display: block;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    position: fixed;
+    z-index: 30;
+  }
+
+  .barra-lateral__cobertura--visivel {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}

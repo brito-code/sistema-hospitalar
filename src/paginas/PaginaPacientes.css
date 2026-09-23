@@ -1,0 +1,108 @@
+.pagina-pacientes__barra {
+  align-items: end;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.pagina-pacientes__busca {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 220px;
+}
+
+.pagina-pacientes__busca span {
+  font-size: 0.88rem;
+  font-weight: 650;
+}
+
+.pagina-pacientes__busca input {
+  background: #fff;
+  border: 1px solid var(--borda);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.pagina-pacientes__busca input:focus-visible {
+  border-color: var(--primaria);
+  outline: 3px solid rgba(15, 111, 107, 0.18);
+}
+
+.pagina-pacientes__contagem {
+  color: var(--texto-suave);
+  margin-bottom: 10px;
+}
+
+.pagina-pacientes__novo {
+  background: var(--primaria);
+  border: 0;
+  border-radius: 10px;
+  color: #fff;
+  font-weight: 650;
+  padding: 10px 16px;
+}
+
+.pagina-pacientes__novo:hover,
+.pagina-pacientes__novo:focus-visible {
+  background: var(--primaria-escura);
+}
+
+.pagina-pacientes__aviso {
+  background: var(--sucesso-suave);
+  border-radius: 10px;
+  color: var(--sucesso);
+  margin-bottom: 16px;
+  padding: 10px 12px;
+}
+
+.pagina-pacientes__aviso--exclusao {
+  background: var(--perigo-suave);
+  color: var(--perigo);
+}
+
+.pagina-pacientes__confirma {
+  align-items: center;
+  background: rgba(16, 40, 51, 0.48);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  padding: 16px;
+  position: fixed;
+  z-index: 50;
+}
+
+.pagina-pacientes__confirma-caixa {
+  background: #fff;
+  border-radius: 16px;
+  max-width: 440px;
+  padding: 20px;
+  width: 100%;
+}
+
+.pagina-pacientes__confirma-caixa h2 {
+  font-size: 1.15rem;
+  margin-bottom: 8px;
+}
+
+.pagina-pacientes__confirma-acoes {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.pagina-pacientes__confirma-acoes button {
+  background: var(--primaria-suave);
+  border: 0;
+  border-radius: 10px;
+  color: var(--primaria-escura);
+  padding: 8px 12px;
+}
+
+.pagina-pacientes__confirma-acoes .pagina-pacientes__excluir {
+  background: var(--perigo);
+  color: #fff;
+}

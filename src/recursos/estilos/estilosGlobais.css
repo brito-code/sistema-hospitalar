@@ -1,0 +1,112 @@
+:root {
+  --fundo: #f3f6f8;
+  --superficie: #ffffff;
+  --texto: #163042;
+  --texto-suave: #5d7082;
+  --borda: #d5e0e8;
+  --primaria: #0f6f6b;
+  --primaria-escura: #0b5552;
+  --primaria-suave: #e5f4f3;
+  --barra-lateral: #102833;
+  --barra-lateral-texto: #d5e3ec;
+  --barra-lateral-suave: #8eabc0;
+  --perigo: #9f2c2c;
+  --perigo-suave: #fdecec;
+  --sucesso: #0f6f4c;
+  --sucesso-suave: #e7f6ef;
+  --sombra: 0 10px 30px rgba(16, 40, 51, 0.08);
+  --raio: 14px;
+  --cabecalho-altura: 72px;
+  --barra-lateral-largura: 268px;
+  --fonte: "Segoe UI", system-ui, sans-serif;
+  color: var(--texto);
+  background: var(--fundo);
+  font: 16px/1.5 var(--fonte);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  background: var(--fundo);
+  color: var(--texto);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+.aplicacao {
+  display: flex;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.aplicacao__principal {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+}
+
+.aplicacao__conteudo {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 24px;
+}
+
+.aplicacao__conteudo > [hidden] {
+  display: none;
+}
+
+.pagina-vazia {
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+  padding: 32px;
+}
+
+.pagina-vazia h2 {
+  font-size: 1.35rem;
+  margin-bottom: 8px;
+}
+
+.pagina-vazia p {
+  color: var(--texto-suave);
+  max-width: 62ch;
+}
+
+@media (max-width: 860px) {
+  .aplicacao__conteudo {
+    padding: 16px;
+  }
+}

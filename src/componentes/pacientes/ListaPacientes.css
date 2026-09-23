@@ -1,0 +1,86 @@
+.lista-pacientes {
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+}
+
+.lista-pacientes__rolagem {
+  overflow-x: auto;
+}
+
+.lista-pacientes__tabela {
+  border-collapse: collapse;
+  min-width: 920px;
+  width: 100%;
+}
+
+.lista-pacientes__tabela caption {
+  caption-side: top;
+  color: var(--texto-suave);
+  font-size: 0.85rem;
+  padding: 14px 16px 0;
+  text-align: left;
+}
+
+.lista-pacientes__tabela th,
+.lista-pacientes__tabela td {
+  border-bottom: 1px solid var(--borda);
+  padding: 12px 14px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.lista-pacientes__tabela th {
+  color: var(--texto-suave);
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.lista-pacientes__tabela tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.lista-pacientes__nome,
+.lista-pacientes__cpf,
+.lista-pacientes__telefone,
+.lista-pacientes__endereco,
+.lista-pacientes__operacoes {
+  white-space: nowrap;
+  width: 1%;
+}
+
+.lista-pacientes__acoes {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+}
+
+.lista-pacientes__acoes button,
+.lista-pacientes__novo {
+  background: var(--primaria-suave);
+  border: 0;
+  border-radius: 8px;
+  color: var(--primaria-escura);
+  padding: 7px 10px;
+}
+
+.lista-pacientes__acoes .lista-pacientes__excluir {
+  background: var(--perigo-suave);
+  color: var(--perigo);
+}
+
+.lista-pacientes__estado {
+  padding: 28px 20px;
+}
+
+.lista-pacientes__estado h2 {
+  font-size: 1.1rem;
+  margin-bottom: 6px;
+}
+
+.lista-pacientes__estado p {
+  color: var(--texto-suave);
+  margin-bottom: 14px;
+}

@@ -29,34 +29,9 @@
   font-size: 0.92rem;
 }
 
-.cabecalho__menu {
-  background: var(--primaria-suave);
-  border: 0;
-  border-radius: 10px;
-  display: none;
-  flex-direction: column;
-  gap: 4px;
-  height: 40px;
-  justify-content: center;
-  padding: 0 10px;
-  width: 42px;
-}
-
-.cabecalho__menu-barra {
-  background: var(--primaria-escura);
-  border-radius: 99px;
-  display: block;
-  height: 2px;
-  width: 18px;
-}
-
 @media (max-width: 860px) {
   .cabecalho {
     padding: 12px 16px;
-  }
-
-  .cabecalho__menu {
-    display: flex;
   }
 
   .cabecalho__titulo {

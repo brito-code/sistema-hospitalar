@@ -1,0 +1,87 @@
+.lista-profissionais {
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+}
+
+.lista-profissionais__rolagem {
+  overflow-x: auto;
+}
+
+.lista-profissionais__tabela {
+  border-collapse: collapse;
+  min-width: 980px;
+  width: 100%;
+}
+
+.lista-profissionais__tabela caption {
+  caption-side: top;
+  color: var(--texto-suave);
+  font-size: 0.85rem;
+  padding: 14px 16px 0;
+  text-align: left;
+}
+
+.lista-profissionais__tabela th,
+.lista-profissionais__tabela td {
+  border-bottom: 1px solid var(--borda);
+  padding: 12px 14px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.lista-profissionais__tabela th {
+  color: var(--texto-suave);
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.lista-profissionais__tabela tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.lista-profissionais__nome,
+.lista-profissionais__registro,
+.lista-profissionais__especialidade,
+.lista-profissionais__telefone,
+.lista-profissionais__email,
+.lista-profissionais__operacoes {
+  white-space: nowrap;
+  width: 1%;
+}
+
+.lista-profissionais__acoes {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+}
+
+.lista-profissionais__acoes button,
+.lista-profissionais__novo {
+  background: var(--primaria-suave);
+  border: 0;
+  border-radius: 8px;
+  color: var(--primaria-escura);
+  padding: 7px 10px;
+}
+
+.lista-profissionais__acoes .lista-profissionais__excluir {
+  background: var(--perigo-suave);
+  color: var(--perigo);
+}
+
+.lista-profissionais__estado {
+  padding: 28px 20px;
+}
+
+.lista-profissionais__estado h2 {
+  font-size: 1.1rem;
+  margin-bottom: 6px;
+}
+
+.lista-profissionais__estado p {
+  color: var(--texto-suave);
+  margin-bottom: 14px;
+}

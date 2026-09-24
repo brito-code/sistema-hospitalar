@@ -1,22 +1,8 @@
 import "./BarraLateral.css";
 
-export default function BarraLateral({
-  itens,
-  paginaAtiva,
-  aberto,
-  aoNavegar,
-  aoFechar,
-}) {
+export default function BarraLateral({ itens, paginaAtiva, aoNavegar }) {
   return (
-    <>
-      <button
-        type="button"
-        className={aberto ? "barra-lateral__cobertura barra-lateral__cobertura--visivel" : "barra-lateral__cobertura"}
-        aria-label="Fechar menu"
-        tabIndex={aberto ? 0 : -1}
-        onClick={aoFechar}
-      />
-      <aside className={aberto ? "barra-lateral barra-lateral--aberto" : "barra-lateral"}>
+    <aside className="barra-lateral">
         <div className="barra-lateral__marca">
           <svg className="barra-lateral__selo" viewBox="0 0 42 42" aria-hidden="true">
             <defs>
@@ -83,7 +69,6 @@ export default function BarraLateral({
             );
           })}
         </nav>
-      </aside>
-    </>
+    </aside>
   );
 }

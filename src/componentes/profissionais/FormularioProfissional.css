@@ -1,0 +1,113 @@
+.formulario-profissional-modal {
+  align-items: center;
+  background: rgba(16, 40, 51, 0.48);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  padding: 16px;
+  position: fixed;
+  z-index: 45;
+}
+
+.formulario-profissional {
+  background: var(--superficie);
+  border-radius: 16px;
+  box-shadow: var(--sombra);
+  max-height: calc(100vh - 32px);
+  max-width: 720px;
+  overflow: auto;
+  padding: 22px;
+  width: 100%;
+}
+
+.formulario-profissional__cabecalho {
+  margin-bottom: 16px;
+}
+
+.formulario-profissional__cabecalho h2 {
+  font-size: 1.15rem;
+}
+
+.formulario-profissional__cabecalho p {
+  color: var(--texto-suave);
+}
+
+.formulario-profissional__grade {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.formulario-profissional__campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.formulario-profissional__campo--largo {
+  grid-column: 1 / -1;
+}
+
+.formulario-profissional__campo span {
+  font-size: 0.88rem;
+  font-weight: 650;
+}
+
+.formulario-profissional__campo input {
+  background: #fff;
+  border: 1px solid var(--borda);
+  border-radius: 10px;
+  color: var(--texto);
+  padding: 10px 12px;
+}
+
+.formulario-profissional__campo input:focus-visible {
+  border-color: var(--primaria);
+  outline: 3px solid rgba(15, 111, 107, 0.18);
+}
+
+.formulario-profissional__campo input[aria-invalid="true"] {
+  border-color: var(--perigo);
+}
+
+.formulario-profissional__erro {
+  color: var(--perigo);
+  font-size: 0.82rem;
+}
+
+.formulario-profissional__acoes {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 18px;
+}
+
+.formulario-profissional__salvar,
+.formulario-profissional__cancelar {
+  border-radius: 10px;
+  padding: 10px 16px;
+}
+
+.formulario-profissional__salvar {
+  background: var(--primaria);
+  border: 0;
+  color: #fff;
+  font-weight: 650;
+}
+
+.formulario-profissional__salvar:hover,
+.formulario-profissional__salvar:focus-visible {
+  background: var(--primaria-escura);
+}
+
+.formulario-profissional__cancelar {
+  background: #fff;
+  border: 1px solid var(--borda);
+  color: var(--texto);
+}
+
+@media (max-width: 720px) {
+  .formulario-profissional__grade {
+    grid-template-columns: 1fr;
+  }
+}

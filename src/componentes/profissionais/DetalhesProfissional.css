@@ -1,0 +1,80 @@
+.detalhes-profissional {
+  align-items: center;
+  background: rgba(16, 40, 51, 0.48);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  padding: 16px;
+  position: fixed;
+  z-index: 45;
+}
+
+.detalhes-profissional__corpo {
+  background: #fff;
+  border-radius: 16px;
+  max-height: calc(100vh - 32px);
+  max-width: 720px;
+  overflow: auto;
+  padding: 22px;
+  width: 100%;
+}
+
+.detalhes-profissional__topo {
+  align-items: flex-start;
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.detalhes-profissional__etiqueta {
+  color: var(--primaria);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.detalhes-profissional__fechar,
+.detalhes-profissional__acoes button {
+  background: var(--primaria-suave);
+  border: 0;
+  border-radius: 10px;
+  color: var(--primaria-escura);
+  padding: 8px 12px;
+}
+
+.detalhes-profissional__dados {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0;
+}
+
+.detalhes-profissional__dados div {
+  margin: 0;
+}
+
+.detalhes-profissional__dados dt {
+  color: var(--texto-suave);
+  font-size: 0.78rem;
+  font-weight: 650;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.detalhes-profissional__dados dd {
+  margin: 4px 0 0;
+}
+
+.detalhes-profissional__acoes {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 18px;
+}
+
+@media (max-width: 720px) {
+  .detalhes-profissional__dados {
+    grid-template-columns: 1fr;
+  }
+}

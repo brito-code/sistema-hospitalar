@@ -18,30 +18,14 @@ const PAGINAS = {
 
 export default function App() {
   const [paginaAtiva, setPaginaAtiva] = useState("pacientes");
-  const [menuAberto, setMenuAberto] = useState(false);
   const itemAtual =
     ITENS_NAVEGACAO.find((item) => item.id === paginaAtiva) ?? ITENS_NAVEGACAO[0];
 
-  function navegar(id) {
-    setPaginaAtiva(id);
-    setMenuAberto(false);
-  }
-
   return (
     <div className="aplicacao">
-      <BarraLateral
-        itens={ITENS_NAVEGACAO}
-        paginaAtiva={itemAtual.id}
-        aberto={menuAberto}
-        aoNavegar={navegar}
-        aoFechar={() => setMenuAberto(false)}
-      />
+      <BarraLateral itens={ITENS_NAVEGACAO} paginaAtiva={itemAtual.id} aoNavegar={setPaginaAtiva} />
       <div className="aplicacao__principal">
-        <Cabecalho
-          titulo={itemAtual.titulo}
-          resumo={itemAtual.resumo}
-          aoAbrirMenu={() => setMenuAberto(true)}
-        />
+        <Cabecalho titulo={itemAtual.titulo} resumo={itemAtual.resumo} />
         <main className="aplicacao__conteudo">
           {ITENS_NAVEGACAO.map((item) => {
             const Pagina = PAGINAS[item.id];

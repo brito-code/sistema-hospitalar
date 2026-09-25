@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BarraLateral from "./componentes/comum/BarraLateral";
 import Cabecalho from "./componentes/comum/Cabecalho";
 import { ITENS_NAVEGACAO } from "./componentes/comum/navegacao";
@@ -7,6 +7,7 @@ import PaginaPacientes from "./paginas/PaginaPacientes";
 import PaginaPainel from "./paginas/PaginaPainel";
 import PaginaProfissionais from "./paginas/PaginaProfissionais";
 import PaginaQuartos from "./paginas/PaginaQuartos";
+import { consultas as consultasIniciais } from "./servicos/dadosSimulados";
 
 const PAGINAS = {
   painel: PaginaPainel,
@@ -18,6 +19,15 @@ const PAGINAS = {
 
 export default function App() {
   const [paginaAtiva, setPaginaAtiva] = useState("pacientes");
+  const [consultas, setConsultas] = useState([]);
+
+  useEffect(() => {
+    const temporizador = setTimeout(() => {
+      const semente = Array.isArray(consultasIniciais) ? consultasIniciais : [];
+      setConsultas(semente.map((consulta) => ({ ...consulta, tipo: consulta.tipo || "Consulta" })));
+    }, 280);
+    return () => clearTimeout(temporizador);
+  }, []);
   const itemAtual =
     ITENS_NAVEGACAO.find((item) => item.id === paginaAtiva) ?? ITENS_NAVEGACAO[0];
 
@@ -31,7 +41,7 @@ export default function App() {
             const Pagina = PAGINAS[item.id];
             return (
               <div key={item.id} hidden={item.id !== itemAtual.id}>
-                <Pagina />
+                <Pagina consultas={consultas} aoDefinirConsultas={setConsultas} />
               </div>
             );
           })}

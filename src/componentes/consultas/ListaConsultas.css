@@ -1,0 +1,110 @@
+.lista-consultas {
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+}
+
+.lista-consultas__rolagem {
+  overflow-x: auto;
+}
+
+.lista-consultas__tabela {
+  border-collapse: collapse;
+  min-width: 980px;
+  width: 100%;
+}
+
+.lista-consultas__tabela caption {
+  caption-side: top;
+  color: var(--texto-suave);
+  font-size: 0.85rem;
+  padding: 14px 16px 0;
+  text-align: left;
+}
+
+.lista-consultas__tabela th,
+.lista-consultas__tabela td {
+  border-bottom: 1px solid var(--borda);
+  padding: 12px 14px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.lista-consultas__tabela th {
+  color: var(--texto-suave);
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.lista-consultas__tabela tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.lista-consultas__tipo,
+.lista-consultas__quando,
+.lista-consultas__pessoa,
+.lista-consultas__especialidade,
+.lista-consultas__situacao,
+.lista-consultas__operacoes {
+  white-space: nowrap;
+  width: 1%;
+}
+
+.lista-consultas__acoes {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+}
+
+.lista-consultas__acoes button,
+.lista-consultas__novo {
+  background: var(--primaria-suave);
+  border: 0;
+  border-radius: 8px;
+  color: var(--primaria-escura);
+  padding: 7px 10px;
+}
+
+.lista-consultas__acoes .lista-consultas__excluir {
+  background: var(--perigo-suave);
+  color: var(--perigo);
+}
+
+.lista-consultas__selo {
+  border-radius: 999px;
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 650;
+  padding: 4px 8px;
+}
+
+.lista-consultas__selo--agendada {
+  background: var(--primaria-suave);
+  color: var(--primaria-escura);
+}
+
+.lista-consultas__selo--realizada {
+  background: var(--sucesso-suave);
+  color: var(--sucesso);
+}
+
+.lista-consultas__selo--cancelada {
+  background: var(--perigo-suave);
+  color: var(--perigo);
+}
+
+.lista-consultas__estado {
+  padding: 28px 20px;
+}
+
+.lista-consultas__estado h2 {
+  font-size: 1.1rem;
+  margin-bottom: 6px;
+}
+
+.lista-consultas__estado p {
+  color: var(--texto-suave);
+  margin-bottom: 14px;
+}

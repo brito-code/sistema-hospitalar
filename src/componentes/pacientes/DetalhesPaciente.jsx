@@ -27,7 +27,7 @@ export default function DetalhesPaciente({
       .filter((consulta) => consulta.pacienteId === paciente.id)
       .map((consulta) => ({
         id: `consulta-${consulta.id}`,
-        tipo: "Consulta",
+        tipo: consulta.tipo === "Internação" ? "Internação" : "Consulta",
         data: consulta.data,
         horario: consulta.horario,
         titulo: consulta.motivo || "Consulta sem motivo informado",

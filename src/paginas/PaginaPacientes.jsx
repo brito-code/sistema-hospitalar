@@ -3,16 +3,10 @@ import DetalhesPaciente from "../componentes/pacientes/DetalhesPaciente";
 import FormularioPaciente from "../componentes/pacientes/FormularioPaciente";
 import { digitos } from "../componentes/pacientes/formatoPaciente";
 import ListaPacientes from "../componentes/pacientes/ListaPacientes";
-import {
-  consultas,
-  internacoes,
-  pacientes as pacientesIniciais,
-  profissionais,
-  quartos,
-} from "../servicos/dadosSimulados";
+import { internacoes, pacientes as pacientesIniciais, profissionais, quartos } from "../servicos/dadosSimulados";
 import "./PaginaPacientes.css";
 
-export default function PaginaPacientes() {
+export default function PaginaPacientes({ consultas = [] }) {
   const [pacientes, setPacientes] = useState([]);
   const [carregando, setCarregando] = useState(true);
   const [busca, setBusca] = useState("");

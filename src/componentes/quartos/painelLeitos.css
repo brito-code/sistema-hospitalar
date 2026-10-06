@@ -1,0 +1,175 @@
+.formulario-quarto-modal,
+.detalhes-quarto,
+.formulario-internacao-modal,
+.detalhes-internacao {
+  align-items: center;
+  background: rgba(16, 40, 51, 0.48);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  padding: 16px;
+  position: fixed;
+  z-index: 45;
+}
+
+.formulario-quarto,
+.detalhes-quarto__corpo,
+.formulario-internacao,
+.detalhes-internacao__corpo {
+  background: var(--superficie);
+  border-radius: 16px;
+  box-shadow: var(--sombra);
+  max-height: calc(100vh - 32px);
+  max-width: 720px;
+  overflow: auto;
+  padding: 22px;
+  width: 100%;
+}
+
+.formulario-quarto__cabecalho,
+.detalhes-quarto__topo,
+.formulario-internacao__cabecalho,
+.detalhes-internacao__topo {
+  margin-bottom: 16px;
+}
+
+.formulario-quarto__cabecalho h2,
+.formulario-internacao__cabecalho h2,
+.detalhes-quarto__topo h2,
+.detalhes-internacao__topo h2 {
+  font-size: 1.15rem;
+}
+
+.formulario-quarto__cabecalho p,
+.formulario-internacao__cabecalho p,
+.detalhes-quarto__etiqueta,
+.detalhes-internacao__etiqueta {
+  color: var(--texto-suave);
+}
+
+.formulario-quarto__grade,
+.formulario-internacao__grade,
+.detalhes-quarto__dados,
+.detalhes-internacao__dados {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.formulario-quarto__campo,
+.formulario-internacao__campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.formulario-quarto__campo--largo,
+.formulario-internacao__campo--largo,
+.detalhes-quarto__largo,
+.detalhes-internacao__largo {
+  grid-column: 1 / -1;
+}
+
+.formulario-quarto__campo span,
+.formulario-internacao__campo span,
+.detalhes-quarto__dados dt,
+.detalhes-internacao__dados dt {
+  font-size: 0.88rem;
+  font-weight: 650;
+}
+
+.formulario-quarto__campo input,
+.formulario-quarto__campo select,
+.formulario-internacao__campo input,
+.formulario-internacao__campo select,
+.formulario-internacao__campo textarea {
+  background: #fff;
+  border: 1px solid var(--borda);
+  border-radius: 10px;
+  color: var(--texto);
+  font: inherit;
+  padding: 10px 12px;
+}
+
+.formulario-internacao__campo textarea {
+  resize: vertical;
+}
+
+.formulario-quarto__campo input:focus-visible,
+.formulario-quarto__campo select:focus-visible,
+.formulario-internacao__campo input:focus-visible,
+.formulario-internacao__campo select:focus-visible,
+.formulario-internacao__campo textarea:focus-visible {
+  border-color: var(--primaria);
+  outline: 3px solid rgba(15, 111, 107, 0.18);
+}
+
+.formulario-quarto__campo input[aria-invalid="true"],
+.formulario-quarto__campo select[aria-invalid="true"],
+.formulario-internacao__campo input[aria-invalid="true"],
+.formulario-internacao__campo select[aria-invalid="true"] {
+  border-color: var(--perigo);
+}
+
+.formulario-quarto__erro,
+.formulario-internacao__erro {
+  color: var(--perigo);
+}
+
+.formulario-quarto__acoes,
+.formulario-internacao__acoes,
+.detalhes-quarto__acoes,
+.detalhes-internacao__acoes {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 18px;
+}
+
+.formulario-quarto__cancelar,
+.formulario-internacao__cancelar,
+.detalhes-quarto__fechar,
+.detalhes-internacao__fechar,
+.detalhes-quarto__acoes button,
+.detalhes-internacao__acoes button {
+  background: var(--primaria-suave);
+  border: 0;
+  border-radius: 10px;
+  color: var(--primaria-escura);
+  padding: 8px 12px;
+}
+
+.formulario-quarto__salvar,
+.formulario-internacao__salvar {
+  background: var(--primaria);
+  border: 0;
+  border-radius: 10px;
+  color: #fff;
+  font-weight: 650;
+  padding: 8px 14px;
+}
+
+.detalhes-quarto__topo,
+.detalhes-internacao__topo {
+  align-items: flex-start;
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+}
+
+.detalhes-quarto__etiqueta,
+.detalhes-internacao__etiqueta {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 640px) {
+  .formulario-quarto__grade,
+  .formulario-internacao__grade,
+  .detalhes-quarto__dados,
+  .detalhes-internacao__dados {
+    grid-template-columns: 1fr;
+  }
+}

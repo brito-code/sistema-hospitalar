@@ -3,11 +3,9 @@ import DetalhesProfissional from "../componentes/profissionais/DetalhesProfissio
 import FormularioProfissional from "../componentes/profissionais/FormularioProfissional";
 import { digitos } from "../componentes/profissionais/formatoProfissional";
 import ListaProfissionais from "../componentes/profissionais/ListaProfissionais";
-import { profissionais as profissionaisIniciais } from "../servicos/dadosSimulados";
 import "./PaginaProfissionais.css";
 
-export default function PaginaProfissionais() {
-  const [profissionais, setProfissionais] = useState([]);
+export default function PaginaProfissionais({ profissionais = [], aoDefinirProfissionais }) {
   const [carregando, setCarregando] = useState(true);
   const [busca, setBusca] = useState("");
   const [modo, setModo] = useState(null);
@@ -26,8 +24,6 @@ export default function PaginaProfissionais() {
 
   useEffect(() => {
     const temporizador = setTimeout(() => {
-      const semente = Array.isArray(profissionaisIniciais) ? profissionaisIniciais : [];
-      setProfissionais(semente.map((profissional) => ({ ...profissional })));
       setCarregando(false);
     }, 280);
     return () => clearTimeout(temporizador);
@@ -74,14 +70,14 @@ export default function PaginaProfissionais() {
 
   function salvar(dados) {
     if (modo === "editar" && selecionado) {
-      setProfissionais((lista) =>
+      aoDefinirProfissionais((lista) =>
         lista.map((profissional) =>
           profissional.id === selecionado.id ? { ...profissional, ...dados } : profissional,
         ),
       );
       mostrarAviso("Profissional atualizado.");
     } else {
-      setProfissionais((lista) => {
+      aoDefinirProfissionais((lista) => {
         const proximoId =
           lista.reduce((maior, profissional) => Math.max(maior, Number(profissional.id) || 0), 0) + 1;
         return [...lista, { id: proximoId, ...dados }];
@@ -93,7 +89,7 @@ export default function PaginaProfissionais() {
 
   function confirmarExclusao() {
     if (!pendenteExclusao) return;
-    setProfissionais((lista) => lista.filter((profissional) => profissional.id !== pendenteExclusao.id));
+    aoDefinirProfissionais((lista) => lista.filter((profissional) => profissional.id !== pendenteExclusao.id));
     mostrarAviso(`${pendenteExclusao.nome} saiu da lista.`, "exclusao");
     if (selecionado?.id === pendenteExclusao.id) fecharPainel();
     setPendenteExclusao(null);
@@ -175,7 +171,7 @@ export default function PaginaProfissionais() {
             <h2 id="confirma-exclusao-profissional">Excluir profissional</h2>
             <p>
               Confirma a exclusão de <strong>{pendenteExclusao.nome}</strong>? O registro sai da
-              lista desta sessão.
+              lista e a exclusão permanece salva.
             </p>
             <div className="pagina-profissionais__confirma-acoes">
               <button type="button" onClick={() => setPendenteExclusao(null)}>

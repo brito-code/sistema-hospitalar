@@ -1,0 +1,58 @@
+.consultas-do-dia,
+.ocupacao-quartos,
+.alertas-pendentes {
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+  padding: 16px;
+}
+
+.consultas-do-dia header,
+.ocupacao-quartos header,
+.alertas-pendentes header {
+  align-items: baseline;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.consultas-do-dia h2,
+.ocupacao-quartos h2,
+.alertas-pendentes h2 {
+  font-size: 1.05rem;
+}
+
+.consultas-do-dia header p,
+.ocupacao-quartos header p,
+.consultas-do-dia__vazio,
+.ocupacao-quartos__vazio,
+.alertas-pendentes__vazio {
+  color: var(--texto-suave);
+}
+
+.consultas-do-dia ol {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.consultas-do-dia li {
+  align-items: center;
+  border-top: 1px solid var(--borda);
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 72px 1.4fr 1.4fr 1fr;
+  padding-top: 8px;
+}
+
+.consultas-do-dia li strong {
+  color: var(--primaria-escura);
+}
+
+@media (max-width: 720px) {
+  .consultas-do-dia li {
+    grid-template-columns: 72px 1fr;
+  }
+}

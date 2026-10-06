@@ -3,12 +3,14 @@ import DetalhesConsulta from "../componentes/consultas/DetalhesConsulta";
 import FormularioConsulta from "../componentes/consultas/FormularioConsulta";
 import { nomePorId, SITUACOES_CONSULTA, TIPOS_ATENDIMENTO } from "../componentes/consultas/formatoConsulta";
 import ListaConsultas from "../componentes/consultas/ListaConsultas";
-import { pacientes as pacientesIniciais, profissionais as profissionaisIniciais } from "../servicos/dadosSimulados";
 import "./PaginaConsultas.css";
 
-export default function PaginaConsultas({ consultas = [], aoDefinirConsultas }) {
-  const [pacientes, setPacientes] = useState([]);
-  const [profissionais, setProfissionais] = useState([]);
+export default function PaginaConsultas({
+  consultas = [],
+  aoDefinirConsultas,
+  pacientes = [],
+  profissionais = [],
+}) {
   const [carregando, setCarregando] = useState(true);
   const [busca, setBusca] = useState("");
   const [filtroTipo, setFiltroTipo] = useState("");
@@ -30,10 +32,6 @@ export default function PaginaConsultas({ consultas = [], aoDefinirConsultas }) 
 
   useEffect(() => {
     const temporizador = setTimeout(() => {
-      setPacientes(Array.isArray(pacientesIniciais) ? pacientesIniciais.map((paciente) => ({ ...paciente })) : []);
-      setProfissionais(
-        Array.isArray(profissionaisIniciais) ? profissionaisIniciais.map((profissional) => ({ ...profissional })) : [],
-      );
       setCarregando(false);
     }, 280);
     return () => clearTimeout(temporizador);
@@ -224,7 +222,7 @@ export default function PaginaConsultas({ consultas = [], aoDefinirConsultas }) 
             <p>
               Confirma a exclusão da consulta de{" "}
               <strong>{nomePorId(pacientes, pendenteExclusao.pacienteId) || "paciente"}</strong>? O horário sai da
-              agenda desta sessão.
+              agenda e a exclusão permanece salva.
             </p>
             <div className="pagina-consultas__confirma-acoes">
               <button type="button" onClick={() => setPendenteExclusao(null)}>

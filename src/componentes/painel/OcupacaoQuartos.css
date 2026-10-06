@@ -1,0 +1,44 @@
+.ocupacao-quartos ul,
+.alertas-pendentes ul {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ocupacao-quartos__topo {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.ocupacao-quartos__topo span,
+.alertas-pendentes li p {
+  color: var(--texto-suave);
+}
+
+.ocupacao-quartos__trilha {
+  background: var(--primaria-suave);
+  border-radius: 999px;
+  height: 8px;
+  margin-top: 6px;
+  overflow: hidden;
+}
+
+.ocupacao-quartos__trilha span {
+  background: var(--primaria);
+  display: block;
+  height: 100%;
+}
+
+.alertas-pendentes li {
+  border-left: 4px solid var(--primaria);
+  padding-left: 10px;
+}
+
+.alertas-pendentes li.alertas-pendentes__item--atraso {
+  border-left-color: var(--perigo);
+}
+
+.alertas-pendentes li strong {
+  display: block;
+}

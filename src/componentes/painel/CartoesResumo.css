@@ -1,0 +1,48 @@
+.cartoes-resumo {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.cartoes-resumo__cartao {
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px;
+}
+
+.cartoes-resumo__cartao p {
+  color: var(--texto-suave);
+  font-size: 0.84rem;
+  font-weight: 650;
+}
+
+.cartoes-resumo__cartao strong {
+  font-size: 1.7rem;
+  line-height: 1.1;
+}
+
+.cartoes-resumo__cartao span {
+  color: var(--texto-suave);
+  font-size: 0.82rem;
+}
+
+.cartoes-resumo__cartao--leitos strong {
+  color: var(--primaria-escura);
+}
+
+@media (max-width: 980px) {
+  .cartoes-resumo {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .cartoes-resumo {
+    grid-template-columns: 1fr;
+  }
+}

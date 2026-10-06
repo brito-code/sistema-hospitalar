@@ -7,7 +7,7 @@ import PaginaPacientes from "./paginas/PaginaPacientes";
 import PaginaPainel from "./paginas/PaginaPainel";
 import PaginaProfissionais from "./paginas/PaginaProfissionais";
 import PaginaQuartos from "./paginas/PaginaQuartos";
-import { consultas as consultasIniciais } from "./servicos/dadosSimulados";
+import { carregarRegistros, salvarRegistros } from "./servicos/api";
 
 const PAGINAS = {
   painel: PaginaPainel,
@@ -20,14 +20,29 @@ const PAGINAS = {
 export default function App() {
   const [paginaAtiva, setPaginaAtiva] = useState("pacientes");
   const [consultas, setConsultas] = useState([]);
+  const [quartos, setQuartos] = useState([]);
+  const [internacoes, setInternacoes] = useState([]);
+  const [pacientes, setPacientes] = useState([]);
+  const [profissionais, setProfissionais] = useState([]);
+  const [dadosProntos, setDadosProntos] = useState(false);
 
   useEffect(() => {
     const temporizador = setTimeout(() => {
-      const semente = Array.isArray(consultasIniciais) ? consultasIniciais : [];
-      setConsultas(semente.map((consulta) => ({ ...consulta, tipo: consulta.tipo || "Consulta" })));
+      const registros = carregarRegistros();
+      setConsultas(registros.consultas);
+      setQuartos(registros.quartos);
+      setInternacoes(registros.internacoes);
+      setPacientes(registros.pacientes);
+      setProfissionais(registros.profissionais);
+      setDadosProntos(true);
     }, 280);
     return () => clearTimeout(temporizador);
   }, []);
+
+  useEffect(() => {
+    if (!dadosProntos) return;
+    salvarRegistros({ pacientes, profissionais, consultas, quartos, internacoes });
+  }, [consultas, dadosProntos, internacoes, pacientes, profissionais, quartos]);
   const itemAtual =
     ITENS_NAVEGACAO.find((item) => item.id === paginaAtiva) ?? ITENS_NAVEGACAO[0];
 
@@ -41,7 +56,19 @@ export default function App() {
             const Pagina = PAGINAS[item.id];
             return (
               <div key={item.id} hidden={item.id !== itemAtual.id}>
-                <Pagina consultas={consultas} aoDefinirConsultas={setConsultas} />
+                <Pagina
+                  consultas={consultas}
+                  aoDefinirConsultas={setConsultas}
+                  quartos={quartos}
+                  aoDefinirQuartos={setQuartos}
+                  internacoes={internacoes}
+                  aoDefinirInternacoes={setInternacoes}
+                  pacientes={pacientes}
+                  aoDefinirPacientes={setPacientes}
+                  profissionais={profissionais}
+                  aoDefinirProfissionais={setProfissionais}
+                  dadosProntos={dadosProntos}
+                />
               </div>
             );
           })}

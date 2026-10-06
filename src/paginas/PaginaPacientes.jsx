@@ -3,11 +3,16 @@ import DetalhesPaciente from "../componentes/pacientes/DetalhesPaciente";
 import FormularioPaciente from "../componentes/pacientes/FormularioPaciente";
 import { digitos } from "../componentes/pacientes/formatoPaciente";
 import ListaPacientes from "../componentes/pacientes/ListaPacientes";
-import { internacoes, pacientes as pacientesIniciais, profissionais, quartos } from "../servicos/dadosSimulados";
 import "./PaginaPacientes.css";
 
-export default function PaginaPacientes({ consultas = [] }) {
-  const [pacientes, setPacientes] = useState([]);
+export default function PaginaPacientes({
+  consultas = [],
+  internacoes = [],
+  quartos = [],
+  pacientes = [],
+  aoDefinirPacientes,
+  profissionais = [],
+}) {
   const [carregando, setCarregando] = useState(true);
   const [busca, setBusca] = useState("");
   const [modo, setModo] = useState(null);
@@ -26,8 +31,6 @@ export default function PaginaPacientes({ consultas = [] }) {
 
   useEffect(() => {
     const temporizador = setTimeout(() => {
-      const semente = Array.isArray(pacientesIniciais) ? pacientesIniciais : [];
-      setPacientes(semente.map((paciente) => ({ ...paciente })));
       setCarregando(false);
     }, 280);
     return () => clearTimeout(temporizador);
@@ -74,14 +77,14 @@ export default function PaginaPacientes({ consultas = [] }) {
 
   function salvar(dados) {
     if (modo === "editar" && selecionado) {
-      setPacientes((lista) =>
+      aoDefinirPacientes((lista) =>
         lista.map((paciente) =>
           paciente.id === selecionado.id ? { ...paciente, ...dados } : paciente,
         ),
       );
       mostrarAviso("Paciente atualizado.");
     } else {
-      setPacientes((lista) => {
+      aoDefinirPacientes((lista) => {
         const proximoId = lista.reduce((maior, paciente) => Math.max(maior, Number(paciente.id) || 0), 0) + 1;
         return [...lista, { id: proximoId, ...dados }];
       });
@@ -92,7 +95,7 @@ export default function PaginaPacientes({ consultas = [] }) {
 
   function confirmarExclusao() {
     if (!pendenteExclusao) return;
-    setPacientes((lista) => lista.filter((paciente) => paciente.id !== pendenteExclusao.id));
+    aoDefinirPacientes((lista) => lista.filter((paciente) => paciente.id !== pendenteExclusao.id));
     mostrarAviso(`${pendenteExclusao.nome} saiu da lista.`, "exclusao");
     if (selecionado?.id === pendenteExclusao.id) fecharPainel();
     setPendenteExclusao(null);
@@ -170,7 +173,7 @@ export default function PaginaPacientes({ consultas = [] }) {
             <h2 id="confirma-exclusao">Excluir paciente</h2>
             <p>
               Confirma a exclusão de <strong>{pendenteExclusao.nome}</strong>? O registro sai da
-              lista desta sessão.
+              lista e a exclusão permanece salva.
             </p>
             <div className="pagina-pacientes__confirma-acoes">
               <button type="button" onClick={() => setPendenteExclusao(null)}>

@@ -12,16 +12,24 @@ class StatusConsultaTest {
     @Test
     void transicoesValidas() {
         assertTrue(AGENDADA.podeIrPara(CONFIRMADA));
-        assertTrue(CONFIRMADA.podeIrPara(EM_ATENDIMENTO));
-        assertTrue(EM_ATENDIMENTO.podeIrPara(CONCLUIDA));
         assertTrue(AGENDADA.podeIrPara(CANCELADA));
+        assertTrue(AGENDADA.podeIrPara(NAO_COMPARECEU));
+        assertTrue(CONFIRMADA.podeIrPara(EM_ATENDIMENTO));
+        assertTrue(CONFIRMADA.podeIrPara(CANCELADA));
+        assertTrue(CONFIRMADA.podeIrPara(NAO_COMPARECEU));
+        assertTrue(EM_ATENDIMENTO.podeIrPara(CONCLUIDA));
     }
 
     @Test
     void transicoesIncompativeisSaoBloqueadas() {
         assertFalse(AGENDADA.podeIrPara(CONCLUIDA));
         assertFalse(AGENDADA.podeIrPara(EM_ATENDIMENTO));
+        assertFalse(CONFIRMADA.podeIrPara(AGENDADA));
+        assertFalse(CONFIRMADA.podeIrPara(CONCLUIDA));
         assertFalse(EM_ATENDIMENTO.podeIrPara(CANCELADA));
+        assertFalse(EM_ATENDIMENTO.podeIrPara(CONFIRMADA));
+        assertFalse(EM_ATENDIMENTO.podeIrPara(NAO_COMPARECEU));
+        assertFalse(EM_ATENDIMENTO.podeIrPara(AGENDADA));
         assertFalse(AGENDADA.podeIrPara(null));
     }
 

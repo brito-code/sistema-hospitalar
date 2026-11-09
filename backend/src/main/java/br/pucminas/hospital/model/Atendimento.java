@@ -54,6 +54,11 @@ public abstract class Atendimento {
 
     public abstract LocalDateTime getDataReferencia();
 
+    /** Observacoes registradas no agendamento, sem passar pela realizacao do atendimento. */
+    protected void definirObservacoes(String observacoes) {
+        this.observacoes = observacoes;
+    }
+
     public Long getId() { return id; }
     public Paciente getPaciente() { return paciente; }
     public ProfissionalSaude getProfissionalResponsavel() { return profissionalResponsavel; }

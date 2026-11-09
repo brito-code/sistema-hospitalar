@@ -5,4 +5,8 @@ public abstract class Medico extends ProfissionalSaude {
 
     protected Medico() {
     }
+
+    protected Medico(String nome) {
+        super(nome);
+    }
 }

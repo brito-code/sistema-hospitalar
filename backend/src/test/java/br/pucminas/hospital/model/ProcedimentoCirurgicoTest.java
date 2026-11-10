@@ -17,7 +17,7 @@ class ProcedimentoCirurgicoTest {
     private final LocalDateTime horario = LocalDateTime.of(2026, 6, 1, 9, 0);
 
     private ProcedimentoCirurgico novo() {
-        return new ProcedimentoCirurgico(paciente, cirurgiao, "Apendicectomia", horario);
+        return new ProcedimentoCirurgico(paciente, cirurgiao, "Apendicectomia", "Videolaparoscopia", horario, "Jejum de 8h");
     }
 
     @Test
@@ -28,9 +28,54 @@ class ProcedimentoCirurgicoTest {
     }
 
     @Test
+    void guardaTipoEObservacoesPreOperatorias() {
+        ProcedimentoCirurgico p = novo();
+        assertEquals("Videolaparoscopia", p.getTipoCirurgia());
+        assertEquals("Jejum de 8h", p.getObservacoesPreOperatorias());
+        assertEquals(horario, p.getDataHoraPrevista());
+        assertNull(p.getObservacoesPosOperatorias());
+        assertNull(p.getDataHoraInicio());
+        assertNull(p.getDataHoraFim());
+    }
+
+    @Test
+    void preOperatoriasSaoOpcionais() {
+        ProcedimentoCirurgico p = new ProcedimentoCirurgico(paciente, cirurgiao, "Apendicectomia", "Aberta", horario,
+                null);
+        assertNull(p.getObservacoesPreOperatorias());
+    }
+
+    @Test
+    void tipoDeCirurgiaEObrigatorio() {
+        assertThrows(RegraNegocioException.class,
+                () -> new ProcedimentoCirurgico(paciente, cirurgiao, "Apendicectomia", null, horario, null));
+        assertThrows(RegraNegocioException.class,
+                () -> new ProcedimentoCirurgico(paciente, cirurgiao, "Apendicectomia", "  ", horario, null));
+    }
+
+    @Test
+    void concluirGuardaPosOperatoriasEHorarioEfetivo() {
+        ProcedimentoCirurgico p = novo();
+        p.iniciar(horario.plusMinutes(10));
+        p.concluir("Recuperacao sem intercorrencias", horario.plusHours(2));
+
+        assertEquals("Recuperacao sem intercorrencias", p.getObservacoesPosOperatorias());
+        assertEquals(horario.plusMinutes(10), p.getDataHoraInicio());
+        assertEquals(horario.plusHours(2), p.getDataHoraFim());
+        assertEquals(horario, p.getDataHoraPrevista());
+    }
+
+    @Test
+    void naoConcluiSemIniciarNaoGravaPosOperatorias() {
+        ProcedimentoCirurgico p = novo();
+        assertThrows(RegraNegocioException.class, () -> p.concluir("x", horario));
+        assertNull(p.getObservacoesPosOperatorias());
+    }
+
+    @Test
     void responsavelPrecisaSerCirurgiao() {
         assertThrows(RegraNegocioException.class,
-                () -> new ProcedimentoCirurgico(paciente, clinico, "Apendicectomia", horario));
+                () -> new ProcedimentoCirurgico(paciente, clinico, "Apendicectomia", "Videolaparoscopia", horario, null));
     }
 
     @Test

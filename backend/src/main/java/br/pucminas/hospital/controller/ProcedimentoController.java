@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.pucminas.hospital.dto.ConclusaoRequest;
+import br.pucminas.hospital.dto.ConclusaoProcedimentoRequest;
 import br.pucminas.hospital.dto.ProcedimentoRequest;
 import br.pucminas.hospital.dto.ProcedimentoResponse;
 import br.pucminas.hospital.model.enums.StatusProcedimento;
@@ -54,7 +54,7 @@ public class ProcedimentoController {
     }
 
     @PatchMapping("/{id}/concluir")
-    public ProcedimentoResponse concluir(@PathVariable Long id, @RequestBody(required = false) ConclusaoRequest req) {
+    public ProcedimentoResponse concluir(@PathVariable Long id, @RequestBody(required = false) ConclusaoProcedimentoRequest req) {
         return service.concluir(id, req);
     }
 

@@ -9,5 +9,7 @@ public record ProcedimentoRequest(
         @NotNull Long pacienteId,
         @NotNull Long profissionalId,
         @NotBlank String descricao,
-        @NotNull LocalDateTime dataHoraAgendada) {
+        @NotBlank String tipoCirurgia,
+        @NotNull LocalDateTime dataHoraPrevista,
+        String observacoesPreOperatorias) {
 }

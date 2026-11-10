@@ -18,7 +18,13 @@ public class ProcedimentoCirurgico extends Atendimento {
 
     private String descricao;
 
-    private LocalDateTime dataHoraAgendada;
+    private String tipoCirurgia;
+
+    private String observacoesPreOperatorias;
+    private String observacoesPosOperatorias;
+
+    /** Previstos (agendamento) e efetivos (inicio e fim reais). */
+    private LocalDateTime dataHoraPrevista;
     private LocalDateTime dataHoraInicio;
     private LocalDateTime dataHoraFim;
 
@@ -29,16 +35,21 @@ public class ProcedimentoCirurgico extends Atendimento {
     }
 
     public ProcedimentoCirurgico(Paciente paciente, ProfissionalSaude responsavel, String descricao,
-            LocalDateTime dataHoraAgendada) {
+            String tipoCirurgia, LocalDateTime dataHoraPrevista, String observacoesPreOperatorias) {
         super(paciente, responsavel);
         if (descricao == null || descricao.isBlank()) {
             throw new RegraNegocioException("Descricao do procedimento e obrigatoria");
         }
-        if (dataHoraAgendada == null) {
+        if (tipoCirurgia == null || tipoCirurgia.isBlank()) {
+            throw new RegraNegocioException("Tipo de cirurgia e obrigatorio");
+        }
+        if (dataHoraPrevista == null) {
             throw new RegraNegocioException("Data e hora do procedimento sao obrigatorias");
         }
         this.descricao = descricao.trim();
-        this.dataHoraAgendada = dataHoraAgendada;
+        this.tipoCirurgia = tipoCirurgia.trim();
+        this.dataHoraPrevista = dataHoraPrevista;
+        this.observacoesPreOperatorias = observacoesPreOperatorias;
         this.status = StatusProcedimento.AGENDADO;
         exigirCirurgiao(); // falha ja no agendamento, nao so na conclusao
     }
@@ -50,8 +61,9 @@ public class ProcedimentoCirurgico extends Atendimento {
     }
 
     /** Usa o Template Method {@link #realizar(String)}: so conclui se a validacao da modalidade passar. */
-    public void concluir(String observacoes, LocalDateTime momento) {
-        realizar(observacoes);
+    public void concluir(String observacoesPosOperatorias, LocalDateTime momento) {
+        realizar(observacoesPosOperatorias);
+        this.observacoesPosOperatorias = observacoesPosOperatorias;
         this.status = StatusProcedimento.CONCLUIDO;
         this.dataHoraFim = momento;
     }
@@ -90,11 +102,14 @@ public class ProcedimentoCirurgico extends Atendimento {
 
     @Override
     public LocalDateTime getDataReferencia() {
-        return dataHoraAgendada;
+        return dataHoraPrevista;
     }
 
     public String getDescricao() { return descricao; }
-    public LocalDateTime getDataHoraAgendada() { return dataHoraAgendada; }
+    public String getTipoCirurgia() { return tipoCirurgia; }
+    public String getObservacoesPreOperatorias() { return observacoesPreOperatorias; }
+    public String getObservacoesPosOperatorias() { return observacoesPosOperatorias; }
+    public LocalDateTime getDataHoraPrevista() { return dataHoraPrevista; }
     public LocalDateTime getDataHoraInicio() { return dataHoraInicio; }
     public LocalDateTime getDataHoraFim() { return dataHoraFim; }
     public StatusProcedimento getStatus() { return status; }

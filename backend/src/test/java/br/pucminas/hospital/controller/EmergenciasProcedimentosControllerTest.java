@@ -74,7 +74,7 @@ class EmergenciasProcedimentosControllerTest {
 
     private String corpoProcedimento(long profissionalId, String dataHora) {
         return """
-                {"pacienteId":%d,"profissionalId":%d,"descricao":"Apendicectomia","dataHoraAgendada":"%s"}"""
+                {"pacienteId":%d,"profissionalId":%d,"descricao":"Apendicectomia","tipoCirurgia":"Videolaparoscopia","dataHoraPrevista":"%s","observacoesPreOperatorias":"Jejum de 8h"}"""
                 .formatted(pacienteId, profissionalId, dataHora);
     }
 
@@ -129,6 +129,9 @@ class EmergenciasProcedimentosControllerTest {
                 .content(corpoProcedimento(cirurgiaoId, "2026-06-01T09:00:00")))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.status").value("AGENDADO"))
+                .andExpect(jsonPath("$.tipoCirurgia").value("Videolaparoscopia"))
+                .andExpect(jsonPath("$.dataHoraPrevista").value("2026-06-01T09:00:00"))
+                .andExpect(jsonPath("$.observacoesPreOperatorias").value("Jejum de 8h"))
                 .andReturn().getResponse().getContentAsString();
         long id = id(resp);
 
@@ -138,11 +141,24 @@ class EmergenciasProcedimentosControllerTest {
         mvc.perform(patch("/procedimentos/" + id + "/iniciar"))
                 .andExpect(status().isOk()).andExpect(jsonPath("$.status").value("EM_ANDAMENTO"));
         mvc.perform(patch("/procedimentos/" + id + "/concluir").contentType(MediaType.APPLICATION_JSON)
-                .content("{\"observacoes\":\"Sem intercorrencias\"}"))
-                .andExpect(status().isOk()).andExpect(jsonPath("$.status").value("CONCLUIDO"));
+                .content("{\"observacoesPosOperatorias\":\"Sem intercorrencias\"}"))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.status").value("CONCLUIDO"))
+                .andExpect(jsonPath("$.observacoesPosOperatorias").value("Sem intercorrencias"))
+                .andExpect(jsonPath("$.observacoesPreOperatorias").value("Jejum de 8h"))
+                .andExpect(jsonPath("$.dataHoraInicio").isNotEmpty())
+                .andExpect(jsonPath("$.dataHoraFim").isNotEmpty());
 
         mvc.perform(get("/procedimentos").param("profissionalId", String.valueOf(cirurgiaoId)))
                 .andExpect(status().isOk()).andExpect(jsonPath("$.length()").value(1));
+    }
+
+    @Test
+    void procedimentoSemTipoDeCirurgiaRetorna400() throws Exception {
+        String corpo = """
+                {"pacienteId":%d,"profissionalId":%d,"descricao":"Apendicectomia","dataHoraPrevista":"2026-06-03T09:00:00"}"""
+                .formatted(pacienteId, cirurgiaoId);
+        mvc.perform(post("/procedimentos").contentType(MediaType.APPLICATION_JSON).content(corpo))
+                .andExpect(status().isBadRequest());
     }
 
     @Test

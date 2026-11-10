@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.pucminas.hospital.dto.ConclusaoRequest;
+import br.pucminas.hospital.dto.ConclusaoProcedimentoRequest;
 import br.pucminas.hospital.dto.ProcedimentoRequest;
 import br.pucminas.hospital.dto.ProcedimentoResponse;
 import br.pucminas.hospital.exception.RecursoNaoEncontradoException;
@@ -45,8 +45,8 @@ public class ProcedimentoService {
 
         // o construtor ja rejeita responsavel que nao e cirurgiao
         ProcedimentoCirurgico procedimento = new ProcedimentoCirurgico(paciente, profissional, req.descricao(),
-                req.dataHoraAgendada());
-        garantirHorarioLivre(req.profissionalId(), req.dataHoraAgendada());
+                req.tipoCirurgia(), req.dataHoraPrevista(), req.observacoesPreOperatorias());
+        garantirHorarioLivre(req.profissionalId(), req.dataHoraPrevista());
         return ProcedimentoResponse.de(procedimentos.save(procedimento));
     }
 
@@ -67,9 +67,9 @@ public class ProcedimentoService {
         return ProcedimentoResponse.de(procedimento);
     }
 
-    public ProcedimentoResponse concluir(Long id, ConclusaoRequest req) {
+    public ProcedimentoResponse concluir(Long id, ConclusaoProcedimentoRequest req) {
         ProcedimentoCirurgico procedimento = obter(id);
-        procedimento.concluir(req != null ? req.observacoes() : null, LocalDateTime.now());
+        procedimento.concluir(req != null ? req.observacoesPosOperatorias() : null, LocalDateTime.now());
         return ProcedimentoResponse.de(procedimento);
     }
 

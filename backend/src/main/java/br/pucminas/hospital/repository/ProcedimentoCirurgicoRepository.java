@@ -17,7 +17,7 @@ public interface ProcedimentoCirurgicoRepository extends JpaRepository<Procedime
             select case when count(p) > 0 then true else false end
             from ProcedimentoCirurgico p
             where p.profissionalResponsavel.id = :profissionalId
-              and p.dataHoraAgendada = :dataHora
+              and p.dataHoraPrevista = :dataHora
               and p.status <> br.pucminas.hospital.model.enums.StatusProcedimento.CANCELADO
             """)
     boolean existeConflito(@Param("profissionalId") Long profissionalId, @Param("dataHora") LocalDateTime dataHora);
@@ -27,7 +27,7 @@ public interface ProcedimentoCirurgicoRepository extends JpaRepository<Procedime
             where (:profissionalId is null or p.profissionalResponsavel.id = :profissionalId)
               and (:pacienteId is null or p.paciente.id = :pacienteId)
               and (:status is null or p.status = :status)
-            order by p.dataHoraAgendada
+            order by p.dataHoraPrevista
             """)
     List<ProcedimentoCirurgico> filtrar(@Param("profissionalId") Long profissionalId,
             @Param("pacienteId") Long pacienteId, @Param("status") StatusProcedimento status);

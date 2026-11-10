@@ -15,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import br.pucminas.hospital.dto.ConclusaoProcedimentoRequest;
 import br.pucminas.hospital.dto.ProcedimentoRequest;
 import br.pucminas.hospital.dto.ProcedimentoResponse;
 import br.pucminas.hospital.exception.RegraNegocioException;
@@ -50,7 +51,7 @@ class ProcedimentoServiceTest {
     }
 
     private ProcedimentoRequest pedido() {
-        return new ProcedimentoRequest(1L, 2L, "Apendicectomia", quando);
+        return new ProcedimentoRequest(1L, 2L, "Apendicectomia", "Videolaparoscopia", quando, "Jejum de 8h");
     }
 
     @Test
@@ -58,6 +59,39 @@ class ProcedimentoServiceTest {
         ProcedimentoResponse criado = service.agendar(pedido());
         assertEquals(StatusProcedimento.AGENDADO, criado.status());
         verify(procedimentos).save(any(ProcedimentoCirurgico.class));
+    }
+
+    @Test
+    void agendamentoGuardaTipoEPreOperatorias() {
+        ProcedimentoResponse criado = service.agendar(pedido());
+        assertEquals("Videolaparoscopia", criado.tipoCirurgia());
+        assertEquals("Jejum de 8h", criado.observacoesPreOperatorias());
+        assertEquals(quando, criado.dataHoraPrevista());
+    }
+
+    @Test
+    void concluirSalvaObservacoesPosOperatorias() {
+        ProcedimentoCirurgico p = new ProcedimentoCirurgico(new Paciente("Ana"),
+                new Cirurgiao("Dr. Bisturi", "CRM-MG 20001", "Geral"), "Apendicectomia", "Aberta", quando, null);
+        when(procedimentos.findById(7L)).thenReturn(Optional.of(p));
+
+        service.iniciar(7L);
+        ProcedimentoResponse concluido = service.concluir(7L, new ConclusaoProcedimentoRequest("Sem intercorrencias"));
+
+        assertEquals(StatusProcedimento.CONCLUIDO, concluido.status());
+        assertEquals("Sem intercorrencias", concluido.observacoesPosOperatorias());
+        assertNotNull(concluido.dataHoraInicio());
+        assertNotNull(concluido.dataHoraFim());
+    }
+
+    @Test
+    void concluirSemCorpoEPermitido() {
+        ProcedimentoCirurgico p = new ProcedimentoCirurgico(new Paciente("Ana"),
+                new Cirurgiao("Dr. Bisturi", "CRM-MG 20001", "Geral"), "Apendicectomia", "Aberta", quando, null);
+        when(procedimentos.findById(8L)).thenReturn(Optional.of(p));
+
+        service.iniciar(8L);
+        assertEquals(StatusProcedimento.CONCLUIDO, service.concluir(8L, null).status());
     }
 
     @Test

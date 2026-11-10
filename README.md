@@ -137,6 +137,52 @@ O front-end em Vite (porta 5173) já está liberado por CORS. Para outras origen
 
 O CPF é aceito com ou sem máscara, validado pelos dígitos verificadores e guardado só com os 11 dígitos. A resposta devolve o CPF e o CEP com máscara e a idade calculada a partir da data de nascimento. Como o histórico de consultas e internações é mantido, um paciente que já teve atendimento não pode ser excluído.
 
+### Emergências
+
+| Método | Rota | O que faz | Respostas |
+| --- | --- | --- | --- |
+| `POST` | `/emergencias` | Registra a chegada do paciente (status `AGUARDANDO_AVALIACAO`) | `201`, `400`, `404` |
+| `GET` | `/emergencias` | Lista; filtros `?pacienteId=` e `?status=` | `200`, `400` |
+| `GET` | `/emergencias/aguardando` | Fila de espera: prioridade mais grave primeiro, empate por ordem de chegada | `200` |
+| `GET` | `/emergencias/{id}` | Busca um atendimento | `200`, `404` |
+| `PATCH` | `/emergencias/{id}/classificar` | Triagem: define a prioridade (`BAIXA`, `MODERADA`, `ALTA`, `CRITICA`) | `200`, `400`, `404`, `409` |
+| `PATCH` | `/emergencias/{id}/iniciar` | `AGUARDANDO_AVALIACAO` → `EM_ATENDIMENTO` | `200`, `404`, `409` (sem prioridade) |
+| `PATCH` | `/emergencias/{id}/concluir` | `EM_ATENDIMENTO` → `CONCLUIDO`; corpo opcional `{"observacoes": "..."}` | `200`, `404`, `409` |
+
+```json
+{
+  "pacienteId": 1,
+  "profissionalId": 1,
+  "prioridade": "ALTA",
+  "queixaPrincipal": "Dor no peito",
+  "dataHoraChegada": "2026-11-10T14:30:00"
+}
+```
+
+`prioridade` e `dataHoraChegada` são opcionais no cadastro (sem data, vale o momento atual), mas o atendimento só pode ser iniciado e concluído com a prioridade definida.
+
+### Procedimentos cirúrgicos
+
+| Método | Rota | O que faz | Respostas |
+| --- | --- | --- | --- |
+| `POST` | `/procedimentos` | Agenda um procedimento (status `AGENDADO`) | `201`, `400`, `404`, `409` (não é cirurgião ou horário ocupado) |
+| `GET` | `/procedimentos` | Lista; filtros `?profissionalId=`, `?pacienteId=` e `?status=` | `200`, `400` |
+| `GET` | `/procedimentos/{id}` | Busca um procedimento | `200`, `404` |
+| `PATCH` | `/procedimentos/{id}/iniciar` | `AGENDADO` → `EM_ANDAMENTO` | `200`, `404`, `409` |
+| `PATCH` | `/procedimentos/{id}/concluir` | `EM_ANDAMENTO` → `CONCLUIDO`; corpo opcional `{"observacoes": "..."}` | `200`, `404`, `409` (não iniciado) |
+| `PATCH` | `/procedimentos/{id}/cancelar` | `AGENDADO` → `CANCELADO` | `200`, `404`, `409` |
+
+```json
+{
+  "pacienteId": 1,
+  "profissionalId": 2,
+  "descricao": "Apendicectomia",
+  "dataHoraAgendada": "2026-11-20T09:00:00"
+}
+```
+
+O responsável precisa ser um profissional do tipo `CIRURGIAO`, e ele não pode ter outro procedimento nem uma consulta no mesmo dia e horário. Procedimento cancelado libera o horário.
+
 ### Formato dos erros
 
 Toda resposta de erro da API tem o mesmo corpo:

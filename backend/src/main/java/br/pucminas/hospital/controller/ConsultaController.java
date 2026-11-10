@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.pucminas.hospital.dto.ConclusaoRequest;
 import br.pucminas.hospital.dto.ConsultaRequest;
 import br.pucminas.hospital.dto.ConsultaResponse;
 import br.pucminas.hospital.dto.ReagendarRequest;
@@ -57,6 +58,21 @@ public class ConsultaController {
     @PatchMapping("/{id}/cancelar")
     public ConsultaResponse cancelar(@PathVariable Long id) {
         return service.cancelar(id);
+    }
+
+    @PatchMapping("/{id}/iniciar")
+    public ConsultaResponse iniciar(@PathVariable Long id) {
+        return service.iniciar(id);
+    }
+
+    @PatchMapping("/{id}/concluir")
+    public ConsultaResponse concluir(@PathVariable Long id, @RequestBody(required = false) ConclusaoRequest req) {
+        return service.concluir(id, req != null ? req.observacoes() : null);
+    }
+
+    @PatchMapping("/{id}/nao-compareceu")
+    public ConsultaResponse naoCompareceu(@PathVariable Long id) {
+        return service.naoCompareceu(id);
     }
 
     @PostMapping("/{id}/reagendar")

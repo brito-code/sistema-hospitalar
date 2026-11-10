@@ -50,6 +50,30 @@ public abstract class Consulta extends Atendimento {
         this.status = destino;
     }
 
+    /** CONFIRMADA -> EM_ATENDIMENTO. */
+    public void iniciarAtendimento() {
+        transitarPara(StatusConsulta.EM_ATENDIMENTO);
+    }
+
+    /** AGENDADA ou CONFIRMADA -> NAO_COMPARECEU. */
+    public void marcarNaoComparecimento() {
+        transitarPara(StatusConsulta.NAO_COMPARECEU);
+    }
+
+    /**
+     * EM_ATENDIMENTO -> CONCLUIDA. A transicao e checada antes da realizacao, para que uma consulta
+     * fora de atendimento nao tenha as observacoes alteradas; {@link #realizar(String)} valida a
+     * modalidade e so entao o status muda.
+     */
+    public void concluir(String observacoes) {
+        if (status == null || !status.podeIrPara(StatusConsulta.CONCLUIDA)) {
+            throw new RegraNegocioException("Transicao de status invalida: " + status + " -> "
+                    + StatusConsulta.CONCLUIDA);
+        }
+        realizar(observacoes);
+        transitarPara(StatusConsulta.CONCLUIDA);
+    }
+
     /** Nova consulta do mesmo subtipo. A original permanece no historico, cancelada pelo servico. */
     public abstract Consulta reagendar(LocalDate novaData, LocalTime novoHorario);
 

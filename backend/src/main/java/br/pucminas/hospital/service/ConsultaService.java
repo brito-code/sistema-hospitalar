@@ -72,6 +72,24 @@ public class ConsultaService {
         return ConsultaResponse.de(consulta);
     }
 
+    public ConsultaResponse iniciar(Long id) {
+        Consulta consulta = obter(id);
+        consulta.iniciarAtendimento();
+        return ConsultaResponse.de(consulta);
+    }
+
+    public ConsultaResponse concluir(Long id, String observacoes) {
+        Consulta consulta = obter(id);
+        consulta.concluir(observacoes);
+        return ConsultaResponse.de(consulta);
+    }
+
+    public ConsultaResponse naoCompareceu(Long id) {
+        Consulta consulta = obter(id);
+        consulta.marcarNaoComparecimento();
+        return ConsultaResponse.de(consulta);
+    }
+
     /**
      * Cancela a consulta original e grava outro agendamento. A vaga da original
      * deixa de bloquear o horario porque o conflito ignora canceladas.

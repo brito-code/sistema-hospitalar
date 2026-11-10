@@ -91,3 +91,64 @@ O Vite informa o endereço local, em geral `http://localhost:5173/`.
 | `npm run build` | Gera a versão de produção em `dist/` |
 | `npm run preview` | Serve a versão gerada |
 | `npm run lint` | Verifica o código com o ESLint |
+
+## API (backend)
+
+O backend fica em `backend/`: Spring Boot 3.5, Java 17, Spring Data JPA e H2 em arquivo (perfil `h2`). Os dados ficam em `backend/data/`, que o Git ignora.
+
+```bash
+cd backend
+mvn spring-boot:run   # API em http://localhost:8080
+mvn test              # testes com banco H2 próprio, recriado a cada execução
+```
+
+Com a API no ar, o console do H2 abre em `http://localhost:8080/h2-console` (JDBC URL `jdbc:h2:file:./data/hospital`, usuário `sa`, senha vazia). Para usar outro banco, crie um `application-<perfil>.properties` e troque `spring.profiles.active`.
+
+O front-end em Vite (porta 5173) já está liberado por CORS. Para outras origens, ajuste `hospital.cors.origens` no `application.properties`.
+
+### Pacientes
+
+| Método | Rota | O que faz | Respostas |
+| --- | --- | --- | --- |
+| `POST` | `/pacientes` | Cadastra um paciente | `201`, `400` (dados inválidos), `409` (CPF já cadastrado) |
+| `GET` | `/pacientes` | Lista em ordem alfabética; `?nome=` filtra pelo nome | `200` |
+| `GET` | `/pacientes/{id}` | Busca um paciente | `200`, `404` |
+| `PUT` | `/pacientes/{id}` | Atualiza os dados | `200`, `400`, `404`, `409` |
+| `DELETE` | `/pacientes/{id}` | Exclui o paciente | `204`, `404`, `409` (tem atendimentos no histórico) |
+
+```json
+{
+  "nome": "Ana Clara Mendes",
+  "cpf": "123.456.789-09",
+  "dataNascimento": "1988-03-14",
+  "telefone": "(31) 98812-3401",
+  "email": "ana.mendes@email.com",
+  "endereco": {
+    "logradouro": "Rua da Bahia",
+    "numero": "1200",
+    "complemento": "Apto 301",
+    "bairro": "Centro",
+    "cidade": "Belo Horizonte",
+    "uf": "MG",
+    "cep": "30160-011"
+  }
+}
+```
+
+O CPF é aceito com ou sem máscara, validado pelos dígitos verificadores e guardado só com os 11 dígitos. A resposta devolve o CPF e o CEP com máscara e a idade calculada a partir da data de nascimento. Como o histórico de consultas e internações é mantido, um paciente que já teve atendimento não pode ser excluído.
+
+### Formato dos erros
+
+Toda resposta de erro da API tem o mesmo corpo:
+
+```json
+{
+  "timestamp": "2026-11-10T10:15:30.123",
+  "status": 400,
+  "mensagem": "Dados invalidos",
+  "caminho": "/pacientes",
+  "detalhes": ["cpf: CPF invalido", "endereco.cep: deve ter 8 digitos (00000-000)"]
+}
+```
+
+`400` é dado inválido na requisição, `404` é recurso inexistente, `409` é regra de negócio ou conflito com o estado atual dos dados (CPF repetido, quarto lotado, alta inválida) e `500` é erro inesperado, sem detalhes internos na resposta.

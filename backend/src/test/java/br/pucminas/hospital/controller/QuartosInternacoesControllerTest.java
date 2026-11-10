@@ -12,7 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import br.pucminas.hospital.model.Paciente;
-import br.pucminas.hospital.model.ProfissionalSaude;
+import br.pucminas.hospital.model.ClinicoGeral;
 import br.pucminas.hospital.repository.InternacaoRepository;
 import br.pucminas.hospital.repository.PacienteRepository;
 import br.pucminas.hospital.repository.ProfissionalSaudeRepository;
@@ -36,7 +36,7 @@ class QuartosInternacoesControllerTest {
         internacaoRepo.deleteAll();
         quartoRepo.deleteAll();
         pacienteId = pacienteRepo.save(new Paciente("Ana")).getId();
-        profissionalId = profissionalRepo.save(new ProfissionalSaude("Dr. X")).getId();
+        profissionalId = profissionalRepo.save(new ClinicoGeral("Dr. X", "CRM-MG 10001")).getId();
     }
 
     private long criarQuarto(int capacidade) throws Exception {

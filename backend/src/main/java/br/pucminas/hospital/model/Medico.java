@@ -1,12 +1,15 @@
 package br.pucminas.hospital.model;
 
-// TODO(dono: Profissional): CRM e mapeamento JPA da hierarquia de medicos.
+import jakarta.persistence.Entity;
+
+/** Profissional medico (CRM). Base de clinico geral, especialista e cirurgiao. */
+@Entity
 public abstract class Medico extends ProfissionalSaude {
 
     protected Medico() {
     }
 
-    protected Medico(String nome) {
-        super(nome);
+    protected Medico(String nome, String crm) {
+        super(nome, crm);
     }
 }

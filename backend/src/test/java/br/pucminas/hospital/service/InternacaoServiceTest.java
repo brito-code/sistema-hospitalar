@@ -18,7 +18,7 @@ import br.pucminas.hospital.exception.AltaInvalidaException;
 import br.pucminas.hospital.exception.QuartoSemVagaException;
 import br.pucminas.hospital.exception.RecursoNaoEncontradoException;
 import br.pucminas.hospital.model.Paciente;
-import br.pucminas.hospital.model.ProfissionalSaude;
+import br.pucminas.hospital.model.ClinicoGeral;
 import br.pucminas.hospital.model.enums.SituacaoQuarto;
 import br.pucminas.hospital.model.enums.TipoQuarto;
 import br.pucminas.hospital.repository.InternacaoRepository;
@@ -45,7 +45,7 @@ class InternacaoServiceTest {
         internacaoRepo.deleteAll();
         quartoRepo.deleteAll();
         pacienteId = pacienteRepo.save(new Paciente("Ana")).getId();
-        profissionalId = profissionalRepo.save(new ProfissionalSaude("Dr. X")).getId();
+        profissionalId = profissionalRepo.save(new ClinicoGeral("Dr. X", "CRM-MG 10001")).getId();
     }
 
     private Long novoQuarto(int capacidade) {

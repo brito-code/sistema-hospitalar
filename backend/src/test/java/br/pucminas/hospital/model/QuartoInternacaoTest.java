@@ -14,7 +14,7 @@ import br.pucminas.hospital.model.enums.TipoQuarto;
 class QuartoInternacaoTest {
 
     private final Paciente paciente = new Paciente("Ana");
-    private final ProfissionalSaude medico = new ProfissionalSaude("Dr. X");
+    private final ProfissionalSaude medico = new ClinicoGeral("Dr. X", "CRM-MG 10001");
     private final LocalDate entrada = LocalDate.of(2026, 5, 10);
 
     private Internacao internar(Quarto quarto) {

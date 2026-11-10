@@ -21,6 +21,7 @@ import br.pucminas.hospital.dto.ConsultaResponse;
 import br.pucminas.hospital.dto.ReagendarRequest;
 import br.pucminas.hospital.exception.RegraNegocioException;
 import br.pucminas.hospital.model.Consulta;
+import br.pucminas.hospital.model.ClinicoGeral;
 import br.pucminas.hospital.model.ConsultaRotina;
 import br.pucminas.hospital.model.MedicoEspecialista;
 import br.pucminas.hospital.model.Paciente;
@@ -49,7 +50,7 @@ class ConsultaServiceTest {
     void preparar() {
         paciente = new Paciente("Ana");
         ReflectionTestUtils.setField(paciente, "id", 1L);
-        clinico = new ProfissionalSaude("Dra. Marina");
+        clinico = new ClinicoGeral("Dra. Marina", "CRM-MG 10002");
         ReflectionTestUtils.setField(clinico, "id", 2L);
         lenient().when(pacientes.findById(1L)).thenReturn(Optional.of(paciente));
         lenient().when(profissionais.findById(2L)).thenReturn(Optional.of(clinico));
@@ -78,7 +79,7 @@ class ConsultaServiceTest {
 
     @Test
     void consultaEspecializadaExigeEspecialidadeDoProfissional() {
-        MedicoEspecialista cardiologista = new MedicoEspecialista("Dra. Mariana", Especialidade.CARDIOLOGIA);
+        MedicoEspecialista cardiologista = new MedicoEspecialista("Dra. Mariana", "CRM-MG 45231", Especialidade.CARDIOLOGIA);
         ReflectionTestUtils.setField(cardiologista, "id", 2L);
         when(profissionais.findById(2L)).thenReturn(Optional.of(cardiologista));
         when(consultas.existeConflito(2L, data, horario)).thenReturn(false);

@@ -14,7 +14,7 @@ import br.pucminas.hospital.dto.ConsultaRequest;
 import br.pucminas.hospital.dto.ConsultaResponse;
 import br.pucminas.hospital.exception.RegraNegocioException;
 import br.pucminas.hospital.model.Paciente;
-import br.pucminas.hospital.model.ProfissionalSaude;
+import br.pucminas.hospital.model.MedicoEspecialista;
 import br.pucminas.hospital.model.enums.Especialidade;
 import br.pucminas.hospital.model.enums.StatusConsulta;
 import br.pucminas.hospital.model.enums.TipoConsulta;
@@ -39,8 +39,7 @@ class ConsultaAgendaTest {
     void preparar() {
         consultas.deleteAll();
         pacienteId = pacientes.save(new Paciente("Ana")).getId();
-        ProfissionalSaude profissional = new ProfissionalSaude("Dra. Mariana");
-        profissional.setEspecialidade(Especialidade.CARDIOLOGIA);
+        MedicoEspecialista profissional = new MedicoEspecialista("Dra. Mariana", "CRM-MG 45231", Especialidade.CARDIOLOGIA);
         profissionalId = profissionais.save(profissional).getId();
     }
 
